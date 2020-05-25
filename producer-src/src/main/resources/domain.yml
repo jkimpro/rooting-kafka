@@ -1,0 +1,149 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    hikari:
+      connection-timeout: 60000
+  jpa:
+    database: default
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    show-sql: true 
+    hibernate:
+      ddl-auto: none
+      type: 
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+        use_sql_comments: true
+        type: trace
+        session_factory:
+          interceptor: com.gsshop.kafka.config.datasource.HibernateQueryInterceptor
+
+jdbc:
+  template: 
+    max: 
+      rows: 1000
+
+#LOCAL
+---
+spring:
+  profiles: local
+
+prd:
+  datasource:
+    jdbc-url: jdbc:mariadb://10.53.27.102:3306/prdDB
+    username: prd_app
+    password: prd_app!@#$
+    driver-class: org.mariadb.jdbc.Driver
+    maxium-pool-size: 4
+    
+smtc:
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.53.27.102:1521:SMTCDB2
+    username: smtc_app
+    password: smtc_app2
+    driver-class: oracle.jdbc.driver.OracleDriver
+    maximum-pool-size: 2
+    
+web:
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.53.27.102:1521:SMTCDB2
+    username: web_comm_user
+    password: web_comm_user2018
+    driver-class: oracle.jdbc.driver.OracleDriver
+    maximum-pool-size: 2
+        
+    
+#DEV
+---
+spring:
+  profiles: dev
+
+smtc:      
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.52.221.44:1630:DEVSMTC
+    username: ENC(YbSzOkD+/Z3MtyUgUgC7jg==)
+    password: ENC(c6rjMZ/bMGaOv6E04w1q4fbO8J4B7r9V)
+    driver-class: oracle.jdbc.driver.OracleDriver
+    minimum-idle: 2
+    maximum-pool-size: 2
+    
+ods:      
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.52.221.44:1630:DEVSMTC
+    username: ENC(OC0iPa5oUOk7FGkeCJb5Wg==)
+    password: ENC(7RDD/MI8d27F+cMGAO+9Y/Ug5phSsKnM)
+    driver-class: oracle.jdbc.driver.OracleDriver
+    minimum-idle: 2
+    maximum-pool-size: 2 
+
+web:
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.53.27.101:1521:SMTCDB2
+    username: web_comm_user
+    password: web_comm_user2018
+    driver-class: oracle.jdbc.driver.OracleDriver
+    maximum-pool-size: 2
+    
+#MSA
+---
+spring:
+  profiles: msa
+
+prd:
+  datasource:
+    jdbc-url: jdbc:mysql://10.52.221.91:3306/msprd?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ENC(45EglASSgefjhY5j6/g9qw==)
+    password: ENC(EhYlIzigRarWxf+n3iOGsbCVBePbljCO)
+    driver-class: com.mysql.cj.jdbc.Driver
+    maxium-pool-size: 4
+
+smtc:      
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.52.221.44:1630:DEVSMTC
+    username: ENC(q0DVj4CbIO9WSTky6FWzCw==)
+    password: ENC(JXT4Nttp/RmOEnn9cWJkcKFHTOzT3HAA)
+    driver-class: oracle.jdbc.driver.OracleDriver
+    minimum-idle: 2
+    maximum-pool-size: 2
+
+web:
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.52.221.44:1530:DEVEC
+    username: ENC(LqlpN3uASa6NeUhxCXvXMw==)
+    password: ENC(N/zraZsrDpaoNB4wZiMCWsxMAe7Y5KX3)
+    driver-class: oracle.jdbc.driver.OracleDriver
+    maximum-pool-size: 2
+
+
+#PRODUCTION
+---
+spring:
+  profiles: prod
+
+smtc:      
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(LOAD_BALANCE=OFF)(FAILOVER=ON)(ADDRESS=(PROTOCOL=TCP)(HOST=165.243.205.151)(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST=165.243.205.171)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=SMTCPRD1)(failover_mode=(type=SELECT)(method=BASIC)(BACKUP=SMTCPRD12))))
+    #username: ENC(aKgFMaCWjsoQwYUsHOtbjg==)
+    #password: ENC(wZIEqX5RUm17u5RfQEIz1C2Y/mxw7jXF)
+    driver-class: oracle.jdbc.driver.OracleDriver
+    minimum-idle: 10
+    maximum-pool-size: 20
+    
+ods:     
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(LOAD_BALANCE=OFF)(FAILOVER=ON)(ADDRESS=(PROTOCOL=TCP)(HOST=165.243.205.151)(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST=165.243.205.171)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=SMTCPRD1)(failover_mode=(type=SELECT)(method=BASIC)(BACKUP=SMTCPRD12))))
+    #username: ENC(ZpQYXrXZbR0Es4/UyctxNg==)
+    #password: ENC(HToVbiCyfKkl9PBp5w7yRKPXl2ib6vs/)
+    driver-class: oracle.jdbc.driver.OracleDriver 
+    minimum-idle: 5
+    maximum-pool-size: 10
+    
+web:
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@10.53.27.101:1521:SMTCDB2
+    username: web_comm_user
+    password: web_comm_user2018
+    driver-class: oracle.jdbc.driver.OracleDriver
+    maximum-pool-size: 2     

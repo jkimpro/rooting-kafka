@@ -1,0 +1,15 @@
+spring:
+  kafka:
+    bootstrap-servers: 10.52.220.194:9092,10.52.220.195:9092,10.52.220.196:9092
+      
+kafka: 
+  bootstrap-servers: 
+    - 10.52.220.194:9092
+    - 10.52.220.195:9092
+    - 10.52.220.196:9092
+  enable: 
+    auto: 
+      commit: false
+  ackmode: MANUAL
+  offset: 
+    reset: lastest
