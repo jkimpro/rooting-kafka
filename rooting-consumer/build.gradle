@@ -1,14 +1,82 @@
-plugins {
-    id 'java'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'kotlin'
+
+buildscript {
+    ext {
+        springBootVersion = '2.2.5.RELEASE'
+        springDependencyVersion = '1.0.9.RELEASE'
+        kotlinVersion = '1.3.70'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('org.junit.platform:junit-platform-gradle-plugin:1.0.1')
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:${springDependencyVersion}"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.1"
+    }
 }
 
 group 'com.rooting.consumer'
 version '1.0-SNAPSHOT'
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 repositories {
     mavenCentral()
 }
 
+war {
+    archiveName = 'ROOT.war'
+}
+
+eclipse {
+    classpath {
+        containers 'org.jetbrains.kotlin.core.KOTLIN_CONTAINER'
+    }
+}
+
 dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+
+
+
+    //kafka
+    compile('org.springframework.kafka:spring-kafka')
+    compile('org.springframework.boot:spring-boot-starter-data-jdbc')
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.hibernate:hibernate-core:5.4.15.Final")
+
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    // JPA (구동되는 DB가 있어야함)
+    compile("org.hibernate:hibernate-core:5.4.15.Final")
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+    //runtimeOnly 'mysql:mysql-connector-java'
+    //Swagger
+    compile("io.springfox:springfox-swagger2:2.9.2") {
+        exclude module: 'swagger-annotations'
+        exclude module: 'swagger-models'
+    }
+    compile("io.swagger:swagger-annotations:1.5.21")
+    compile("io.swagger:swagger-models:1.5.21")
+    compile('io.springfox:springfox-swagger-ui:2.9.2')
+
+    //Encrypt DBInfo
+    compile group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '2.1.0'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
 }
