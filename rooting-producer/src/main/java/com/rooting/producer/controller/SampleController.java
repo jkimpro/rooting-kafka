@@ -18,12 +18,11 @@ public class SampleController {
     private SampleService sampleService;
 
     @RequestMapping(value = "/kafka/sample", method = RequestMethod.GET)
-    public String sample(@RequestParam String prdCd){
-        if(StringUtils.isBlank(prdCd)){
+    public String sample(@RequestParam String empCd){
+        if(StringUtils.isBlank(empCd)){
             throw new RuntimeException();
         }
-        return sampleService.sample(new BigDecimal(prdCd));
+        return sampleService.sampleEmpM(new BigDecimal(empCd));
     }
-
 
 }
